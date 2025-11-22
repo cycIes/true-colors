@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Play
+{% endblock %}
+
+{% block content %}
+    {{ hex }}
+    <div id="color">
+    </div>
+
+    
+{% endblock %}
+
+{% block script %}
+    <script>
+        let color_value = '{{ color }}';
+        let color_box = document.querySelector("#color");
+        color_box.style.backgroundColor = color_value;
+        
+    </script>
+{% endblock %}
