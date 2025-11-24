@@ -18,8 +18,8 @@ def random_color():
         color += str(hex(randrange(0, 255)))[2:].zfill(2)
     return color
 
-# color = random_color()
-color = "d46dd6"
+color = random_color()
+# color = "d46dd6"
 attempts = []
 count = 0
 won = False

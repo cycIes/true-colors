@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block content %}
+    <button type="button" data-bs-toggle="modal" data-bs-target="#instructions">How To</button>
     <p>Guesses: {{ count }}</p>
     <p>Your color is:</p>
     {{ hex }}
@@ -32,6 +33,37 @@
             <input name="6" maxlength="1" pattern="[A-Fa-f0-9]" required autocomplete="off">
             <button id="submit" type="submit">Check</button>
         </form>
+    </div>
+    <!-- Instructions -->
+    <div class="modal fade" id="instructions" tabindex="-1" aria-labelledby="instructions-label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="instructions-label">How To Play</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Try to guess the hexcode of the color in the box. 
+                        If you don't know what a hexcode is, it is basically a 6-digit representation of a color. 
+                        Valid digits are from A-F and all numerical digits.
+                    </p>
+                    <p>
+                        Enter your guess in the cells below, and press check to see how you do.
+                        Cells highlighted in green indicate that the digit you guessed at that position is correct.
+                        Cells highlighted in yellow indicate that the digit is in the hexcode, but not in the correct position.
+                        Cells in gray are not in the hexcode.
+                        You have unlimited attempts to guess the color.
+                    </p>
+                    <p>
+                        Good luck!
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
 
