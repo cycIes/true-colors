@@ -55,7 +55,9 @@
                     next.focus();
                 }
             }
-            else if (e.key === 'Backspace') 
+        }));
+        fields.forEach((field) => field.addEventListener('keydown', (e) => {
+            if (e.key === 'Backspace' && field.value === '')
             {
                 field.blur()
                 previous = field.previousElementSibling

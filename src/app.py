@@ -40,33 +40,31 @@ def check():
     length = len(color)
     
     digits = [input for input in answers]
+    remaining = [digit for digit in color]
+    partial_guesses = []
     for i in range(length):
-        digit = digits[i]
-        if digit.lower() == color[i]:
+        digit = digits[i].lower()
+        if digit == color[i]:
             correct = "correct"
+            remaining[i] = ""
         elif digit in color:
-            if digits[:i+1].count(digit) > color.count(digit):
-                correct = "incorrect"
-            else:
-                j = 0
-                while True:
-                    print(j)
-                    index = color.find(digit.lower(), j)
-                    if index == -1:
-                        break
-                    if digits[j].lower() != color[j]:
-                        correct = "partial"
-                        break
-                    else:
-                        correct = "incorrect"
-                    j = index + 1
+            partial_guesses.append({"digit": digit, "index": i})
+            correct = "incorrect"
             victory = False
         else:
             correct = "incorrect"
             victory = False
         attempt.append({"value": digit, "correct": correct})
-        guessed_color += digit
-        i += 1
+        guessed_color += digits[i]
+    
+    print(partial_guesses)
+    print(remaining)
+    for guess in partial_guesses:
+        if guess["digit"] in remaining:
+            index = remaining.index(guess["digit"])
+            attempt[guess["index"]]["correct"] = "partial"
+            remaining[index] = ""
+            
     attempts.append({"attempt": attempt, "color": guessed_color})
     
     if victory:
