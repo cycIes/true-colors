@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-    <p>Congratulations! You guessed the color!</p>
+    <p>Congratulations! You guessed the color in {{ count }} guess{% if count > 1 %}es{% endif %}!</p>
     <p id="color">#{{ color }}</p>
 {% endblock %}
 

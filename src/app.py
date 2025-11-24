@@ -18,7 +18,8 @@ def random_color():
         color += str(hex(randrange(0, 255)))[2:].zfill(2)
     return color
 
-color = random_color()
+# color = random_color()
+color = "d46dd6"
 attempts = []
 count = 0
 won = False
@@ -35,20 +36,38 @@ def check():
     attempt = []
     answers = request.form.values()
     victory = True
-    i = 0
+    guessed_color = "#"
+    length = len(color)
     
-    for input in answers:
-        if input == color[i]:
+    digits = [input for input in answers]
+    for i in range(length):
+        digit = digits[i]
+        if digit.lower() == color[i]:
             correct = "correct"
-        elif input in color:
-            correct = "partial"
+        elif digit in color:
+            if digits[:i+1].count(digit) > color.count(digit):
+                correct = "incorrect"
+            else:
+                j = 0
+                while True:
+                    print(j)
+                    index = color.find(digit.lower(), j)
+                    if index == -1:
+                        break
+                    if digits[j].lower() != color[j]:
+                        correct = "partial"
+                        break
+                    else:
+                        correct = "incorrect"
+                    j = index + 1
             victory = False
         else:
             correct = "incorrect"
             victory = False
-        attempt.append({"value": input, "correct": correct})
+        attempt.append({"value": digit, "correct": correct})
+        guessed_color += digit
         i += 1
-    attempts.append(attempt)
+    attempts.append({"attempt": attempt, "color": guessed_color})
     
     if victory:
         global won
@@ -61,5 +80,5 @@ def check():
 def victory():
     if won:
         # return render_template("index.html", color=f"#{color}", hex=color, attempts=attempts, victory=True, count=count)
-        return render_template("victory.html", color=color)
+        return render_template("victory.html", color=color, count=count)
     return redirect("/")

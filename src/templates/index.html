@@ -8,14 +8,14 @@
     <p>Guesses: {{ count }}</p>
     <p>Your color is:</p>
     {{ hex }}
-    <div id="color">
+    <div id="color-box">
     </div>
     <p>Guesses:</p>
     <div id="attempts">
         {% for attempt in attempts %}
             <div>
-                #
-                {% for digit in attempt %}
+                <p class="inline" style="color: {{ attempt["color"] }}">#</p>
+                {% for digit in attempt["attempt"] %}
                     <input name="attempt" value={{ digit["value"] }} disabled class={{ digit["correct"] }}>
                 {% endfor %}
             </div>
@@ -24,7 +24,7 @@
     <div id="input">
         <form id="input" action="/check" method="post">
             #
-            <input name="1" maxlength="1" pattern="[A-Fa-f0-9]" required autocomplete="off">
+            <input name="1" maxlength="1" pattern="[A-Fa-f0-9]" required autocomplete="off" autofocus>
             <input name="2" maxlength="1" pattern="[A-Fa-f0-9]" required autocomplete="off">
             <input name="3" maxlength="1" pattern="[A-Fa-f0-9]" required autocomplete="off">
             <input name="4" maxlength="1" pattern="[A-Fa-f0-9]" required autocomplete="off">
@@ -37,15 +37,37 @@
 
 {% block embedded %}
     <style>
-        #color {
+        #color-box {
             background-color: {{ color }};
         }
     </style>
     <script>
+        
+        let input = document.querySelector('#input');
+        let fields = input.querySelectorAll('input');
+        fields.forEach((field) => field.addEventListener('keyup', (e) => {
+            if (e.key !== 'Backspace' && e.key !== 'Shift') 
+            {
+                field.blur();
+                next = field.nextElementSibling;
+                if (next) 
+                {
+                    next.focus();
+                }
+            }
+            else if (e.key === 'Backspace') 
+            {
+                field.blur()
+                previous = field.previousElementSibling
+                if (previous)
+                {
+                    previous.focus();
+                }
+            }
+        }));
+        
+
         {#
-        let color_value = '{{ color }}';
-        let color_box = document.querySelector('#color');
-        color_box.style.backgroundColor = color_value;
         
         let input = document.querySelector('#input');
         let submit = document.querySelector('#submit')
