@@ -9,7 +9,9 @@
 }
 
 input {
-    width: 25px;
+    width: 2.75rem;
+    height: 2.75rem;
+    text-align: center;
 }
 
 .correct {

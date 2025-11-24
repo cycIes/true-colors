@@ -5,62 +5,76 @@
 {% endblock %}
 
 {% block content %}
-    <button type="button" data-bs-toggle="modal" data-bs-target="#instructions">How To</button>
-    <p>Guesses: {{ count }}</p>
-    <p>Your color is:</p>
-    {{ hex }}
-    <div id="color-box">
-    </div>
-    <p>Guesses:</p>
-    <div id="attempts">
-        {% for attempt in attempts %}
-            <div>
-                <p class="inline" style="color: {{ attempt["color"] }}">#</p>
-                {% for digit in attempt["attempt"] %}
-                    <input name="attempt" value={{ digit["value"] }} disabled class={{ digit["correct"] }}>
-                {% endfor %}
-            </div>
-        {% endfor %}
-    </div>
-    <div id="input">
-        <form id="input" action="/check" method="post">
-            #
-            <input name="1" maxlength="1" pattern="[A-Fa-f0-9]" required autocomplete="off" autofocus>
-            <input name="2" maxlength="1" pattern="[A-Fa-f0-9]" required autocomplete="off">
-            <input name="3" maxlength="1" pattern="[A-Fa-f0-9]" required autocomplete="off">
-            <input name="4" maxlength="1" pattern="[A-Fa-f0-9]" required autocomplete="off">
-            <input name="5" maxlength="1" pattern="[A-Fa-f0-9]" required autocomplete="off">
-            <input name="6" maxlength="1" pattern="[A-Fa-f0-9]" required autocomplete="off">
-            <button id="submit" type="submit">Check</button>
-        </form>
-    </div>
-    <!-- Instructions -->
-    <div class="modal fade" id="instructions" tabindex="-1" aria-labelledby="instructions-label" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="instructions-label">How To Play</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div id="content">
+        <button type="button" data-bs-toggle="modal" data-bs-target="#instructions">
+            How To
+            {#
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-square" viewBox="0 0 16 16">
+                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+                <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286m1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94"/>
+            </svg>
+            #}
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286m1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94"/>
+            </svg>
+        </button>
+        <p>Guesses: {{ count }}</p>
+        <p>Your color is:</p>
+        {{ hex }}
+        <div id="color-box">
+        </div>
+        <p>Guesses:</p>
+        <div id="attempts">
+            {% for attempt in attempts %}
+                <div>
+                    <p class="inline fs-1 fw-bolder align-middle" style="color: {{ attempt["color"] }}">#</p>
+                    {% for digit in attempt["attempt"] %}
+                        <input name="attempt" value={{ digit["value"] }} disabled class="{{ digit["correct"] }} align-middle fs-3">
+                    {% endfor %}
                 </div>
-                <div class="modal-body">
-                    <p>
-                        Try to guess the hexcode of the color in the box. 
-                        If you don't know what a hexcode is, it is basically a 6-digit representation of a color. 
-                        Valid digits are from A-F and all numerical digits.
-                    </p>
-                    <p>
-                        Enter your guess in the cells below, and press check to see how you do.
-                        Cells highlighted in green indicate that the digit you guessed at that position is correct.
-                        Cells highlighted in yellow indicate that the digit is in the hexcode, but not in the correct position.
-                        Cells in gray are not in the hexcode.
-                        You have unlimited attempts to guess the color.
-                    </p>
-                    <p>
-                        Good luck!
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+            {% endfor %}
+        </div>
+        <div id="input">
+            <form id="input" action="/check" method="post">
+                <p class="inline fs-1 fw-bolder align-middle">#</p>
+                <input name="1" maxlength="1" pattern="[A-Fa-f0-9]" required autocomplete="off" class="align-middle fs-3" autofocus>
+                <input name="2" maxlength="1" pattern="[A-Fa-f0-9]" required autocomplete="off" class="align-middle fs-3">
+                <input name="3" maxlength="1" pattern="[A-Fa-f0-9]" required autocomplete="off" class="align-middle fs-3">
+                <input name="4" maxlength="1" pattern="[A-Fa-f0-9]" required autocomplete="off" class="align-middle fs-3">
+                <input name="5" maxlength="1" pattern="[A-Fa-f0-9]" required autocomplete="off" class="align-middle fs-3">
+                <input name="6" maxlength="1" pattern="[A-Fa-f0-9]" required autocomplete="off" class="align-middle fs-3">
+                <button id="submit" type="submit" class="align-middle">Check</button>
+            </form>
+        </div>
+        <!-- Instructions -->
+        <div class="modal fade" id="instructions" tabindex="-1" aria-labelledby="instructions-label" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="instructions-label">How To Play</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            Try to guess the hexcode of the color in the box. 
+                            If you don't know what a hexcode is, it is basically a 6-digit representation of a color. 
+                            Valid digits are from A-F and all numerical digits.
+                        </p>
+                        <p>
+                            Enter your guess in the cells below, and press check to see how you do.
+                            Cells highlighted in green indicate that the digit you guessed at that position is correct.
+                            Cells highlighted in yellow indicate that the digit is in the hexcode, but not in the correct position.
+                            Cells in gray are not in the hexcode.
+                            You have unlimited attempts to guess the color.
+                        </p>
+                        <p>
+                            Good luck!
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
         </div>

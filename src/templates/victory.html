@@ -11,7 +11,7 @@
     {% for attempt in attempts %}
         <div>
             {% for digit in attempt["attempt"] %}
-            <div class="inline-square {{ digit['correct'] }}"></div>
+            <div class="inline-square {{ digit["correct"] }}"></div>
             {% endfor%}
         </div>
     {% endfor %}
