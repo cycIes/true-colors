@@ -5,9 +5,9 @@
 {% endblock %}
 
 {% block content %}
-    <div id="content">
-        <button type="button" data-bs-toggle="modal" data-bs-target="#instructions">
-            How To
+    <div class="content">
+        <button type="button" data-bs-toggle="modal" data-bs-target="#instructions" class="clean-btn">
+            HOW TO
             {#
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-square" viewBox="0 0 16 16">
                 <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
@@ -19,24 +19,22 @@
                 <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286m1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94"/>
             </svg>
         </button>
-        <p>Guesses: {{ count }}</p>
-        <p>Your color is:</p>
-        {{ hex }}
+        <p>Guess the color below.</p>
+        
         <div id="color-box">
         </div>
-        <p>Guesses:</p>
-        <div id="attempts">
-            {% for attempt in attempts %}
-                <div>
-                    <p class="inline fs-1 fw-bolder align-middle" style="color: {{ attempt["color"] }}">#</p>
-                    {% for digit in attempt["attempt"] %}
-                        <input name="attempt" value={{ digit["value"] }} disabled class="{{ digit["correct"] }} align-middle fs-3">
-                    {% endfor %}
-                </div>
-            {% endfor %}
-        </div>
-        <div id="input">
-            <form id="input" action="/check" method="post">
+        <form id="input" action="/check" method="post">
+            <div id="attempts">
+                {% for attempt in attempts %}
+                    <div>
+                        <p class="inline fs-1 fw-bolder align-middle" style="color: {{ attempt["color"] }}">#</p>
+                        {% for digit in attempt["attempt"] %}
+                            <input name="attempt" value={{ digit["value"] }} disabled class="{{ digit["correct"] }} align-middle fs-3">
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+            <div id="input">
                 <p class="inline fs-1 fw-bolder align-middle">#</p>
                 <input name="1" maxlength="1" pattern="[A-Fa-f0-9]" required autocomplete="off" class="align-middle fs-3" autofocus>
                 <input name="2" maxlength="1" pattern="[A-Fa-f0-9]" required autocomplete="off" class="align-middle fs-3">
@@ -44,8 +42,39 @@
                 <input name="4" maxlength="1" pattern="[A-Fa-f0-9]" required autocomplete="off" class="align-middle fs-3">
                 <input name="5" maxlength="1" pattern="[A-Fa-f0-9]" required autocomplete="off" class="align-middle fs-3">
                 <input name="6" maxlength="1" pattern="[A-Fa-f0-9]" required autocomplete="off" class="align-middle fs-3">
-                <button id="submit" type="submit" class="align-middle">Check</button>
-            </form>
+            </div>
+            <div>
+                <button id="submit" type="submit" class="align-middle normal-btn">CHECK</button>
+            </div>
+        </form>
+        <!-- Keyboard -->
+        <div id="keyboard">
+            <div id="numbers">
+                <button id="1" class="key normal-btn">1</button>
+                <button id="2" class="key normal-btn">2</button>
+                <button id="3" class="key normal-btn">3</button>
+                <button id="4" class="key normal-btn">4</button>
+                <button id="5" class="key normal-btn">5</button>
+                <button id="6" class="key normal-btn">6</button>
+                <button id="7" class="key normal-btn">7</button>
+                <button id="8" class="key normal-btn">8</button>
+                <button id="9" class="key normal-btn">9</button>
+                <button id="0" class="key normal-btn">0</button>
+            </div>
+            <div id="letters">
+                <button id="A" class="key normal-btn">A</button>
+                <button id="B" class="key normal-btn">B</button>
+                <button id="C" class="key normal-btn">C</button>
+                <button id="D" class="key normal-btn">D</button>
+                <button id="E" class="key normal-btn">E</button>
+                <button id="F" class="key normal-btn">F</button>
+                <button id="backspace" class="key normal-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-backspace" viewBox="0 0 16 16">
+                        <path d="M5.83 5.146a.5.5 0 0 0 0 .708L7.975 8l-2.147 2.146a.5.5 0 0 0 .707.708l2.147-2.147 2.146 2.147a.5.5 0 0 0 .707-.708L9.39 8l2.146-2.146a.5.5 0 0 0-.707-.708L8.683 7.293 6.536 5.146a.5.5 0 0 0-.707 0z"/>
+                        <path d="M13.683 1a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-7.08a2 2 0 0 1-1.519-.698L.241 8.65a1 1 0 0 1 0-1.302L5.084 1.7A2 2 0 0 1 6.603 1zm-7.08 1a1 1 0 0 0-.76.35L1 8l4.844 5.65a1 1 0 0 0 .759.35h7.08a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1z"/>
+                    </svg>
+                </button>
+            </div>
         </div>
         <!-- Instructions -->
         <div class="modal fade" id="instructions" tabindex="-1" aria-labelledby="instructions-label" aria-hidden="true">

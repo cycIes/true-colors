@@ -5,19 +5,22 @@
 {% endblock %}
 
 {% block content %}
-    <p>Congratulations! You guessed the color in {{ count }} guess{% if count > 1 %}es{% endif %}!</p>
-    <p id="color">#{{ color }}</p>
-    <p>Here's how you did:</p>
-    {% for attempt in attempts %}
-        <div>
-            {% for digit in attempt["attempt"] %}
-            <div class="inline-square {{ digit["correct"] }}"></div>
-            {% endfor%}
-        </div>
-    {% endfor %}
-    <form action="/new" method="get">
-        <button type="submit">Play Again</button>
-    </form>
+    <div class="content">
+        <h1>Congratulations!</h1>
+        <p>You guessed the color in {{ count }} guess{% if count > 1 %}es{% endif %}!</p>
+        <p id="color">#{{ color }}</p>
+        <p>Here's how you did:</p>
+        {% for attempt in attempts %}
+            <div>
+                {% for digit in attempt["attempt"] %}
+                <div class="inline-square {{ digit["correct"] }}"></div>
+                {% endfor%}
+            </div>
+        {% endfor %}
+        <form action="/new" method="get">
+            <button type="submit" class="normal-btn">Play Again</button>
+        </form>
+    </div>
 {% endblock %}
 
 {% block embedded %}

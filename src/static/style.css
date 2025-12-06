@@ -1,7 +1,24 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
 #color-box {
     width: 100px;
     height: 100px;
-    border: 4px solid lightgray;
+    border: 2px solid var(--bs-gray-500);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+div {
+    margin: 0.5rem;
 }
 
 .inline {
@@ -12,22 +29,52 @@ input {
     width: 2.75rem;
     height: 2.75rem;
     text-align: center;
+    border: 2px solid light-dark(var(--bs-gray-500), var(--bs-gray-300));
+    caret-color: transparent;
+}
+
+input:focus-visible {
+    border: 2px solid light-dark(var(--bs-gray), var(--bs-gray-200));
+    outline: 0px;
 }
 
 .correct {
     background-color: lightgreen;
+    color: white;
+    border-color: lightgreen;
 }
 
 .partial {
     background-color: khaki;
+    color: white;
+    border-color: khaki;
 }
 
 .incorrect {
-    background-color: lightgray;
+    background-color: var(--bs-gray-600);
+    color: white;
+    border-color: var(--bs-gray-600);
 }
 
 .inline-square {
     display: inline-block;
     width: 25px;
     height: 25px;
+}
+
+.key {
+    vertical-align: middle;
+}
+
+.clean-btn {
+    background: none;
+    border: none;
+}
+
+.normal-btn {
+    border-width: 0px;
+    border-radius: 0.3rem;
+    padding: 0.5rem;
+    font-weight: bold;
+    background-color: var(--bs-gray-400);
 }
