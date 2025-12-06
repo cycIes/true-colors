@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="content">
+    <div class="content m-3">
         <div id="toolbar">
             <button type="button" data-bs-toggle="modal" data-bs-target="#instructions" class="clean-btn">
                 HOW TO
@@ -36,7 +36,7 @@
         
         <div id="color-box">
         </div>
-        <form id="input" action="/check" method="post">
+        <form id="input" action="/check" method="post" class="m-2">
             <div id="attempts">
                 {% for attempt in attempts %}
                     <div class="inputs">
@@ -47,7 +47,7 @@
                     </div>
                 {% endfor %}
                 <div class="inputs mb-0">
-                    <p class="inline fs-1 fw-bolder align-middle">#</p>
+                    <p class="inline fs-1 fw-bolder align-middle mb-0">#</p>
                     <input name="1" maxlength="1" pattern="[A-Fa-f0-9]" required autocomplete="off" class="align-middle fs-3" autofocus>
                     <input name="2" maxlength="1" pattern="[A-Fa-f0-9]" required autocomplete="off" class="align-middle fs-3">
                     <input name="3" maxlength="1" pattern="[A-Fa-f0-9]" required autocomplete="off" class="align-middle fs-3">
@@ -56,11 +56,11 @@
                     <input name="6" maxlength="1" pattern="[A-Fa-f0-9]" required autocomplete="off" class="align-middle fs-3">
                 </div>
             </div>
-            <button id="submit" type="submit" class="align-middle normal-btn">CHECK</button>
+            <button id="submit" type="submit" class="align-middle normal-btn m-2">CHECK</button>
         </form>
         <!-- Keyboard -->
         <div id="keyboard">
-            <div id="numbers">
+            <div id="numbers" class="m-1">
                 <button id="1" class="key normal-btn" type="button">1</button>
                 <button id="2" class="key normal-btn" type="button">2</button>
                 <button id="3" class="key normal-btn" type="button">3</button>
@@ -72,7 +72,7 @@
                 <button id="9" class="key normal-btn" type="button">9</button>
                 <button id="0" class="key normal-btn" type="button">0</button>
             </div>
-            <div id="letters">
+            <div id="letters" class="m-1">
                 <button id="A" class="key normal-btn" type="button">A</button>
                 <button id="B" class="key normal-btn" type="button">B</button>
                 <button id="C" class="key normal-btn" type="button">C</button>
@@ -112,8 +112,26 @@
                             Good luck!
                         </p>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+        <!-- Settings -->
+        <div class="modal fade" id="settings" tabindex="-1" aria-labelledby="settings-label" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="settings-label">Settings</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="settings-container">
+                        <div class="form-check form-switch form-check-reverse">
+                            <label class="form-check-label" for="switchGuessMode">Limited guesses</label>
+                            <input class="form-check-input" type="checkbox" role="switch" id="switchGuessMode">
+                        </div>
+                        <div class="form-check form-switch form-check-reverse">
+                            <label class="form-check-label" for="switchDarkMode">Dark mode</label>
+                            <input class="form-check-input" type="checkbox" role="switch" id="switchDarkMode">
+                        </div>
                     </div>
                 </div>
             </div>

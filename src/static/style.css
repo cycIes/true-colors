@@ -17,10 +17,6 @@ form {
     align-items: center;
 }
 
-div {
-    margin: 0.5rem;
-}
-
 .inline {
     display: inline;
 }
@@ -103,4 +99,8 @@ button {
 #toolbar {
     display: flex;
     justify-content: space-evenly;
+}
+
+#settings-container {
+    width: 210px;
 }
