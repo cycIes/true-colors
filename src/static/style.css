@@ -15,8 +15,8 @@ html, body {
 }
 
 #color-box {
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     border: 2px solid light-dark(var(--bs-gray-500), var(--bs-gray-700));
 }
 
