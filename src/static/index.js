@@ -115,21 +115,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Toggle dark mode
     dark_mode_toggle.addEventListener('click', () => {
-        if (!(body.classList.contains('light') || body.classList.contains('dark')))
-        {
-            body.classList.add(color_scheme);
-        }
-
         if (dark_mode_toggle.checked)
         {
-            body.classList.replace(color_scheme, 'dark');
             color_scheme = 'dark';
         }
         else
         {
-            body.classList.replace(color_scheme, 'light');
             color_scheme = 'light';
         }
+        body.setAttribute('data-bs-theme', color_scheme);
         saveSettings();
     });
 });

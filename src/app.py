@@ -21,6 +21,7 @@ def reset():
     global color
     global attempts
     global count
+    global end
     global won
     global correct_digits
     global partial_digits
@@ -30,6 +31,7 @@ def reset():
     color = random_color()
     attempts = []
     count = 0
+    end = False
     won = False
     correct_digits = []
     partial_digits = []
@@ -38,12 +40,14 @@ def reset():
 
 reset()
 
+MAX_ATTEMPTS = 10
+
 dark_mode = False
 limited_mode = False
 
 @app.route("/")
 def index():
-    return render_template("index.html", color=f"#{color}", hex=color, attempts=attempts, victory=False, key_classes=key_classes, dark_mode=dark_mode, limited_mode=limited_mode)
+    return render_template("index.html", color=f"#{color}", hex=color, attempts=attempts, max=MAX_ATTEMPTS, end=end, victory=won, count=count, key_classes=key_classes, dark_mode=dark_mode, limited_mode=limited_mode)
 
 @app.route("/check", methods=["POST"])
 def check():
@@ -86,16 +90,10 @@ def check():
     
     if victory:
         global won
+        global end
+        
         won = True
-        return redirect("/victory")
-    else:
-        return redirect("/")
-    
-@app.route("/victory")
-def victory():
-    if won:
-        # return render_template("index.html", color=f"#{color}", hex=color, attempts=attempts, victory=True, count=count)
-        return render_template("victory.html", color=color, count=count, attempts=attempts, dark_mode=dark_mode)
+        end = True
     return redirect("/")
 
 @app.route("/new")
