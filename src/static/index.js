@@ -6,11 +6,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const valid_digit_keys = ['A', 'B', 'C', 'D', 'E', 'F', 'a', 'b', 'c', 'd', 'e', 'f', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
     const keyboard = document.querySelector('#keyboard');
     const dark_mode_toggle = document.querySelector('#switchDarkMode');
+    const limited_mode_toggle = document.querySelector('#switchGuessMode');
+    const digits_count = 6;
 
     let color_scheme;
-    fetch("/settings")
+    let limited_mode;
+    fetch('/settings')
     .then(response => response.json())
-    .then(data => data.dark_mode ? color_scheme = 'dark' : color_scheme = 'light');
+    .then(data => {
+        color_scheme = data.dark_mode ? color_scheme = 'dark' : color_scheme = 'light';
+        limited_mode = data.limited_mode;
+    });
+
+    let max_attempts;
+    let count;
+    fetch('/data')
+    .then(response => response.json())
+    .then(data => {
+        max_attempts = data.max_attempts;
+        count = data.count;
+    });
 
     // Focus the next element
     function focusNext(current)
@@ -32,21 +47,55 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Create extra input fields
+    function createExtraInputs()
+    {
+        const extra = document.querySelector('#extra');
+
+        let remaining = max_attempts - count - 1;
+        for (let i = 0; i < remaining; i++) 
+        {
+            let div = document.createElement('div');
+            div.className = 'inputs';
+            extra.appendChild(div);
+
+            let hashSign = document.createElement('p');
+            hashSign.textContent = '#'
+            hashSign.className = 'inline fs-1 fw-bolder align-middle mb-0';
+            hashSign.style.color = '#000';
+            div.appendChild(hashSign);
+
+            for (let i = 0; i < digits_count; i++)
+            {
+                let input = document.createElement('input');
+                input.name = 'locked';
+                input.toggleAttribute('disabled');
+                input.className = ('align-middle fs-3');
+                div.appendChild(input);
+            }
+        }
+    }
+
+    function deleteExtraInputs()
+    {
+        const extra = document.querySelector('#extra');
+        extra.replaceChildren();
+    }
+
     // POST settings data
     function saveSettings()
     {
         let data = new FormData();
-        const settings = document.querySelector("#settings-container");
+        const settings = document.querySelector('#settings-container');
         const modes = settings.querySelectorAll('input');
         for (const mode of modes) 
         {
             data.append(mode.name, mode.checked);
         }
-        fetch("/settings", {
-            "method": "POST",
-            "body": data
+        fetch('/settings', {
+            'method': 'POST',
+            'body': data
         })
-        .then(response => response.json());
     }
 
     // Focus next input element after typing a valid key
@@ -125,5 +174,31 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         body.setAttribute('data-bs-theme', color_scheme);
         saveSettings();
+    });
+
+    // Toggle limited guess mode
+    limited_mode_toggle.addEventListener('click', () => {
+        limited_mode = !limited_mode;
+        saveSettings();
+        if (limited_mode)
+        {
+            if (count >= max_attempts)
+            {
+                fetch('/lose')
+                .then(response => {
+                    if (response.redirected) {
+                        window.location = response.url;
+                    }
+                })
+            }
+            else 
+            {
+                createExtraInputs();
+            }
+        }
+        else 
+        {
+            deleteExtraInputs();
+        }
     });
 });

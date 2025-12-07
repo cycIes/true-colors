@@ -94,6 +94,8 @@ def check():
         
         won = True
         end = True
+    elif limited_mode and count >= MAX_ATTEMPTS:
+        end = True
     return redirect("/")
 
 @app.route("/new")
@@ -111,7 +113,22 @@ def settings():
         
         dark_mode = settings.get("darkMode") == "true"
         limited_mode = settings.get("limitedMode") == "true"
-    
+        
         return settings
     else:
         return {"dark_mode": dark_mode, "limited_mode": limited_mode}
+    
+@app.route("/data")
+def data():
+    data = {
+        "color": color,
+        "count": count,
+        "max_attempts": MAX_ATTEMPTS
+    }
+    return data
+
+@app.route("/lose")
+def lose():
+    global end
+    end = True
+    return redirect("/")

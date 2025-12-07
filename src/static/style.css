@@ -4,7 +4,7 @@ html, body {
 }
 
 .fill-screen {
-    background-color: light-dark(white, var(--bs-gray-900));
+    background-color: light-dark(white, var(--bs-dark));
 }
 
 .content {
@@ -53,21 +53,24 @@ input:focus-visible {
 }
 
 .correct {
-    background-color: lightgreen;
+    --correct: light-dark(rgb(127, 204, 127), rgb(57, 104, 57));
+    background-color: var(--correct);
     color: white;
-    border-color: lightgreen;
+    border-color: var(--correct);
 }
 
 .partial {
-    background-color: khaki;
+    --partial: light-dark(rgb(250, 223, 137), rgb(160, 133, 46));
+    background-color: var(--partial);
     color: white;
-    border-color: khaki;
+    border-color: var(--partial);
 }
 
 .incorrect {
-    background-color: light-dark(var(--bs-gray-600), var(--bs-gray-700));
+    --incorrect: light-dark(var(--bs-gray-600), var(--bs-gray-dark));
+    background-color: var(--incorrect);
     color: white;
-    border-color: light-dark(var(--bs-gray-600), var(--bs-gray-700));
+    border-color: var(--incorrect);
 }
 
 #toolbar > h1, p {
@@ -106,7 +109,7 @@ input:focus-visible {
 }
 
 button {
-    background-color: light-dark(var(--bs-gray-400), var(--bs-gray-600));
+    background-color: light-dark(var(--bs-gray-400), var(--bs-gray));
     justify-content: center;
 }
 
