@@ -7,16 +7,13 @@ Navigate to the src directory. You will need to install the required dependencie
 Set up a Python virtual environment (venv) in your terminal and activate it. The commands may vary from system to system, but you can probably use:
     `python -m venv` and then...
 
-    For Windows cmd.exe:
-
+For Windows cmd.exe:
     `venv\Scripts\activate.bat`
 
-    For Windows Powershell:
-
+For Windows Powershell:
     `venv\Scripts\Activate.ps1`
 
-    For Linux/MacOS:
-
+For Linux/MacOS:
     `source venv/bin/activate`
 
 where venv is the name of your venv.
@@ -30,7 +27,7 @@ The goal of the game is to guess the hexcode of the color in the box.
 
 ### Guesses
 The topmost blank row is open for you to start typing your guess. Only characters 0-9 and A-F are allowed. You must type a character in every blank before checking your answer.
-When you have typed a valid guess, click the Check button to check your answer.
+When you have typed a valid guess, click the **Check** button to check your answer.
 You have unlimited guesses by default, but you can switch to a mode in settings which limits your number of guesses to ten.
 
 ### Guess feedback
@@ -42,13 +39,13 @@ The hash/pound symbol (#) next to each previous guess will change to the color r
 
 ### Ending the game
 The game ends when you have correctly guessed all the digits in the hexcode (all the tiles are green) or you have exhausted all of your guesses (in limited guessing mode). You will see the answer and how many guesses you used. If you won, you also can see a small representation of your attempts.
-You may start a new game by clicking the Play Again button.
+You may start a new game by clicking the **Play Again** button.
 
 ### Features
 There is a three icon toolbar under the title which link to game information, extra information, and settings popups. Game information (linked to the question mark icon) explains the rules of the game, extra information (linked to the i icon) elaborates on hexcodes, and settings allows you to toggle the color mode of the page and the game mode. You can select between having unlimited guesses or only ten guesses.
 
 ### Starting a new game
-Upon ending the game, you should be able to click the button Play Again to start a new game.
+Upon ending the game, you should be able to click the button **Play Again** to start a new game.
 To start a new game before the game is over, navigate to http://127.0.0.1:5000/new.
 
 ## Project description
