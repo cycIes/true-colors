@@ -53,45 +53,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Create extra input fields
-    function createExtraInputs()
-    {
-        const extra = document.querySelector('#extra');
-
-        let remaining = max_attempts - count - 1;
-        for (let i = 0; i < remaining; i++) 
-        {
-            // Append input row
-            let div = document.createElement('div');
-            div.className = 'inputs m-0';
-            extra.appendChild(div);
-
-            // Append hash sign
-            let hashSign = document.createElement('p');
-            hashSign.textContent = '#'
-            hashSign.className = 'inline fw-bolder align-middle mb-0';
-            hashSign.style.color = '#000';
-            div.appendChild(hashSign);
-
-            // Append input fields
-            for (let i = 0; i < digits_count; i++)
-            {
-                let input = document.createElement('input');
-                input.name = 'locked';
-                input.toggleAttribute('disabled');
-                input.className = ('align-middle fs-3');
-                div.appendChild(input);
-            }
-        }
-    }
-
-    // Delete extra input fields
-    function deleteExtraInputs()
-    {
-        const extra = document.querySelector('#extra');
-        extra.replaceChildren();
-    }
-
     // POST settings data
     function saveSettings()
     {
@@ -210,14 +171,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 })
             }
-            else 
-            {
-                createExtraInputs();
-            }
-        }
-        else 
-        {
-            deleteExtraInputs();
         }
     });
 });

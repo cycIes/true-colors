@@ -8,14 +8,20 @@ document.addEventListener('DOMContentLoaded', () => {
     let end = false;
     let dark_mode = false;
     let limited_mode = false;
+    const digits_count = 6;
 
-    const MAX_ATTEMPTS = 10
+    const MAX_ATTEMPTS = 2;
 
     // Document nodes
     const color_box = document.querySelector('#color-box')
     const check = document.querySelector('#check');
     const input = document.querySelector('#input');
     const keys = document.querySelectorAll('.key');
+    const limited_mode_toggle = document.querySelector('#switchGuessMode');
+    const extra = document.querySelector('#extra');
+
+    const current_guess = input.querySelector('#current');
+    const inputs = current_guess.querySelectorAll('input');
 
     // Reset variables
     function reset() 
@@ -36,8 +42,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // Generate random 6 digit hexadecimal number
         for (let i = 0; i < 6; i++)
         {
-            color += Math.floor((Math.random() * 16)).toString(16);
+            color += Math.floor((Math.random() * 16)).toString(16).toUpperCase();
         }
+        console.log(color)
         return color;
     }
 
@@ -95,7 +102,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Record the guess
         attempts.push({'attempt': attempt, 'color': guessed_color});
-        console.log(key_classes);
 
         // Check if the user won or lost
         if (victory) 
@@ -109,6 +115,40 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Move past guess up and clear input fields
+    function clearInputs(last_attempt) 
+    {
+        const digits = last_attempt['attempt'];
+        for (const input of inputs) 
+        {
+            input.value = '';
+        }
+        const div = document.createElement('div');
+        div.className = 'inputs m-0';
+        input.insertBefore(div, current_guess);
+
+        const hash_sign = document.createElement('p');
+        hash_sign.textContent = '#';
+        hash_sign.className = 'inline fw-bolder align-middle mb-0';
+        hash_sign.style.color = last_attempt['color'];
+        div.appendChild(hash_sign);
+
+        for (const digit of digits) 
+        {
+            const input = document.createElement('input');
+            input.name = 'attempt';
+            input.value = digit['value'];
+            input.toggleAttribute('disabled');
+            input.className = 'align-middle fs-3 ' + digit['correct'];
+            div.appendChild(input);
+        }
+
+        if (limited_mode) 
+        {
+            extra.removeChild(extra.lastChild);
+        }
+    }
+
     // Color code keyboard according to accuracy of user guesses
     function keyboardFeedback() 
     {
@@ -116,9 +156,45 @@ document.addEventListener('DOMContentLoaded', () => {
         keys.forEach((key) => {
             if (key_classes[key.id])
             {
-                key.classList.add(key_classes[key.id]);
+                key.className = 'key normal-btn ' + key_classes[key.id];
             }
         });
+    }
+
+    // Create extra input fields
+    function createExtraInputs()
+    {
+        let remaining = MAX_ATTEMPTS - count - 1;
+        for (let i = 0; i < remaining; i++) 
+        {
+            // Append input row
+            let div = document.createElement('div');
+            div.className = 'inputs m-0';
+            extra.appendChild(div);
+
+            // Append hash sign
+            let hash_sign = document.createElement('p');
+            hash_sign.textContent = '#';
+            hash_sign.className = 'inline fw-bolder align-middle mb-0';
+            hash_sign.style.color = '#000';
+            div.appendChild(hash_sign);
+
+            // Append input fields
+            for (let i = 0; i < digits_count; i++)
+            {
+                let input = document.createElement('input');
+                input.name = 'locked';
+                input.toggleAttribute('disabled');
+                input.className = ('align-middle fs-3');
+                div.appendChild(input);
+            }
+        }
+    }
+
+    // Delete extra input fields
+    function deleteExtraInputs()
+    {
+        extra.replaceChildren();
     }
 
     // Event listeners
@@ -127,15 +203,37 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         count++;
 
-        const current_guess = input.querySelector('#current');
-        const inputs = current_guess.querySelectorAll('input');
         let digits = [];
         for (const input of inputs) 
         {
-            digits.push(input.value.toUpperCase());
+            digits.push(input.value);
         }
         checkGuess(digits);
         keyboardFeedback();
+
+        const last_attempt = attempts[attempts.length - 1];
+        clearInputs(last_attempt);
+        console.log(key_classes)
+    });
+
+    // Toggle limited guess mode
+    limited_mode_toggle.addEventListener('click', () => {
+        limited_mode = !limited_mode;
+        if (limited_mode)
+        {
+            if (count >= MAX_ATTEMPTS)
+            {
+                // lose
+            }
+            else 
+            {
+                createExtraInputs();
+            }
+        }
+        else 
+        {
+            deleteExtraInputs();
+        }
     });
 
     // Run on load
