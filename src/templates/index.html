@@ -43,7 +43,7 @@
             {% endfor %}
             <!-- Input fields for user -->
             {% if not end %}
-                <div class="inputs m-0">
+                <div id="current" class="inputs m-0">
                     <p class="inline fw-bolder align-middle mb-0">#</p>
                     <input name="1" maxlength="1" pattern="[A-Fa-f0-9]" required autocomplete="off" class="align-middle fs-3" autofocus>
                     <input name="2" maxlength="1" pattern="[A-Fa-f0-9]" required autocomplete="off" class="align-middle fs-3">
@@ -68,7 +68,7 @@
             </div>
             <!-- Check answer -->
             {% if not end %}
-                <button id="submit" type="submit" class="align-middle normal-btn m-2">CHECK</button>
+                <button id="check" type="submit" class="align-middle normal-btn m-2">CHECK</button>
             {% endif %}
         </form>
         <!-- Keyboard -->
@@ -79,7 +79,7 @@
                 {% endfor %}
             </div>
             <div id="letters" class="m-1">
-                {% for letter in "ABCEDF" %}
+                {% for letter in "ABCDEF" %}
                     <button id="{{ letter }}" class="key normal-btn" type="button" tabindex="-1">{{ letter }}</button>
                 {% endfor %}
                 <button id="backspace" class="key normal-btn" type="button" aria-label="backspace-button" tabindex="-1">
@@ -257,4 +257,5 @@
             losing_page.show();
         {% endif %}
     </script>
+    <script src="static/game.js"></script>
 {% endblock %}
