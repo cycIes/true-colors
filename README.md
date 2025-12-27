@@ -1,8 +1,10 @@
 # Hexdle
 This is Hexdle, a color guessing browser game built with Flask, Python, HTML, CSS, and Javascript.
 
+You can play it at this link: https://hexdle-g6vw.onrender.com
+
 ## Installation and Running Locally
-This game is played locally on your machine. First, download the src folder. Then install Python if you do not have it already. Flask recommends using the latest version of Python. 
+You can also play this game locally on your machine. First, download the src folder. Then install Python if you do not have it already. Flask recommends using the latest version of Python. 
 Navigate to the src directory. You will need to install the required dependencies in requirements.txt.
 Set up a Python virtual environment (venv) in your terminal and activate it. The commands may vary from system to system, but you can probably use:
     `python -m venv` and then...
