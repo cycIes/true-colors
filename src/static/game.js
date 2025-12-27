@@ -274,7 +274,7 @@ document.addEventListener('DOMContentLoaded', () => {
             for (const digit of attempt['attempt']) 
             {
                 const square = document.createElement('div');
-                square.className = 'inline-square m-1 ' + digit['correct'];
+                square.className = 'inline-square ms-1 me-1 mb-1 ' + digit['correct'];
                 div.appendChild(square);
             }
             body.appendChild(div);
