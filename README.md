@@ -47,7 +47,3 @@ There is a three icon toolbar under the title which link to game information, ex
 ### Starting a new game
 Upon ending the game, you should be able to click the button **Play Again** to start a new game.
 To start a new game before the game is over, navigate to http://127.0.0.1:5000/new.
-
-## Project description
-[See me showcase my project here.](https://youtu.be/KGW-UA7SKSY)
-https://youtu.be/KGW-UA7SKSY
